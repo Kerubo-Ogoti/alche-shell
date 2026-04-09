@@ -1,2 +1,2 @@
 #!/bin/bash
-result=$(( $(echo "$WATER" | tr water 01234) + $(echo "$STIR" | tr stir 0123) )); base="bestchol"; out=""; while [ $result -gt 0 ]; do out="${base:$((result % 8)):1}$out"; result=$((result / 8)); done; echo "$out"
+echo $(printf %o $(($((5#$(echo $WATER | tr 'water' '01234'))) + $((5#$(echo $STIR | tr 'stir.' '01234'))))) | tr '01234567' 'bestchol')
