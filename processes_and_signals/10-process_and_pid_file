@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Creates /var/run/myscript.pid with its PID, loops "To infinity and beyond",
+# handles SIGINT (displays message, continues), SIGTERM (displays message, deletes file, exits),
+# and SIGQUIT (deletes file, exits)
+
+PIDFILE="/var/run/myscript.pid"
+
+# Write the script's PID to the file
+echo $$ > "$PIDFILE"
+
+# Cleanup function: remove PID file and exit
+cleanup() {
+    rm -f "$PIDFILE"
+    exit 0
+}
+
+# Handler for SIGTERM
+term_handler() {
+    echo "I hate the kill command"
+    cleanup
+}
+
+# Handler for SIGINT (Ctrl+C) – just print and continue
+int_handler() {
+    echo "Y U no love me?!"
+}
+
+# Handler for SIGQUIT – delete file and exit
+quit_handler() {
+    cleanup
+}
+
+# Set up signal traps
+trap term_handler SIGTERM
+trap int_handler SIGINT
+trap quit_handler SIGQUIT
+
+# Infinite loop
+while true; do
+    echo "To infinity and beyond"
+    sleep 1
+done
