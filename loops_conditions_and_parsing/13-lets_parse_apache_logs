@@ -1,4 +1,3 @@
-#!/bin/bash
-
-# Read from standard input (allows piping or redirection)
-awk '{print $1, $9}'
+#!/usr/bin/env bash
+# This script displays visitor IP and HTTP status code from Apache log
+awk '{print $1, $9}' apache-access.log
