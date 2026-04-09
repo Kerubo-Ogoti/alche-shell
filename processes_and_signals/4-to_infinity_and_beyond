@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#this displays the statement to infinity
+
+displaying="To infinity and beyond"
+while true
+   do
+ echo "$displaying"
+
+ sleep 2
+
+done
