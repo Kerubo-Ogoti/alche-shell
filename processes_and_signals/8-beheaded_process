@@ -1,3 +1,22 @@
 #!/usr/bin/env bash
-# Kills the process named "7-highlander"
-pkill 7-highlander
+# Kills the process "7-highlander" by finding its PID(s) and terminating them
+
+# Find PIDs of processes whose command line contains "7-highlander"
+pids=$(pgrep -f "7-highlander")
+
+if [ -z "$pids" ]; then
+    echo "No 7-highlander process found."
+    exit 1
+fi
+
+# Send SIGTERM first
+echo "$pids" | xargs kill -TERM 2>/dev/null
+
+# Wait a moment, then check if any still exist
+sleep 1
+still_running=$(pgrep -f "7-highlander")
+
+if [ -n "$still_running" ]; then
+    # Force kill with SIGKILL
+    echo "$still_running" | xargs kill -KILL 2>/dev/null
+fi
