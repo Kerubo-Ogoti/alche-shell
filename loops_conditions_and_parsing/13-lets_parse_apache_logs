@@ -1,3 +1,4 @@
-#!/usr/bin/env bash
-# Displays IP and HTTP status code from Apache log
-awk '{print $1 " " $9}' "apache-access.log file"
+#!/bin/bash
+
+# Read from standard input (allows piping or redirection)
+awk '{print $1, $9}'
