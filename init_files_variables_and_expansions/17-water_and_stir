@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "ibase=5; obase=7; $(echo $WATER | tr water 01234) + $(echo $STIR | tr stir 0123)" | tr bestchol 01234567 | bc | tr 01234567 bestchol
+result=$(( $(echo "$WATER" | tr water 01234) + $(echo "$STIR" | tr stir 0123) )); base="bestchol"; out=""; while [ $result -gt 0 ]; do out="${base:$((result % 8)):1}$out"; result=$((result / 8)); done; echo "$out"
